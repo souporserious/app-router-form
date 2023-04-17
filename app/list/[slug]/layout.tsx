@@ -1,13 +1,11 @@
-import { Form } from './form'
-
-export default function RootLayout({
+export default function DetailLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <>
-      <Form />
+      <h2>Detail Page</h2>
       {children}
     </>
   )
