@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function Page({ searchParams }) {
   return (
     <div>
-      <h2>List</h2>
+      <h2>Item List</h2>
       {['a', 'b', 'c'].map((item) => (
         <div key={item}>
           <Link href={`/list/${item}`}>{item}</Link>
