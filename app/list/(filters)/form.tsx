@@ -96,7 +96,7 @@ export function Form() {
           </button>
         </li>
       </ul>
-      <input name="vegetable" type="hidden" value={vegetable} />
+      <input name="vegetable" type="hidden" />
 
       <div style={{ height: '1rem' }}>{isPending ? 'Loading...' : null}</div>
     </form>
