@@ -22,14 +22,33 @@ export default async function Page({
   ).flatMap((response) => response.results)
 
   return (
-    <>
-      <h2>Pokemon</h2>
-      {allPokemon.map((pokemon) => (
-        <div key={pokemon.name}>
-          <Link href={`/${pokemon.name}`}>{pokemon.name}</Link>
-        </div>
-      ))}
-      <Link href={`/?offset=${offset + PAGE_SIZE}`}>Show More</Link>
-    </>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        gap: '0.75rem',
+      }}
+    >
+      <h2 style={{ margin: 0 }}>Pokemon</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        {allPokemon.map((pokemon) => (
+          <div key={pokemon.name}>
+            <Link href={`/${pokemon.name}`}>{pokemon.name}</Link>
+          </div>
+        ))}
+      </div>
+      <Link
+        href={`/?offset=${offset + PAGE_SIZE}`}
+        style={{
+          display: 'inline-block',
+          padding: '0.5rem',
+          border: '1px solid black',
+          textDecoration: 'none',
+        }}
+      >
+        Show More
+      </Link>
+    </div>
   )
 }
