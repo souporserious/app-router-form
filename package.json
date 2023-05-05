@@ -11,8 +11,8 @@
     "react-dom": "latest"
   },
   "devDependencies": {
-    "@types/node": "18.16.3",
-    "@types/react": "18.2.0",
+    "@types/node": "20.0.0",
+    "@types/react": "18.2.5",
     "typescript": "5.0.4"
   }
 }
