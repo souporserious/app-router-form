@@ -9,14 +9,15 @@ export default async function Page({
   searchParams: { query?: string; offset?: number }
 }) {
   const offset = Number(searchParams.offset ?? 0)
-  const pagesToFetch = Math.ceil((offset + PAGE_SIZE) / PAGE_SIZE)
+  const pagesToFetch = Array.from(
+    { length: Math.ceil((offset + PAGE_SIZE) / PAGE_SIZE) },
+    (_, index) => {
+      return `${POKEMON_API}?limit=${PAGE_SIZE}&offset=${PAGE_SIZE * index}`
+    }
+  )
   const allPokemon = (
     await Promise.all(
-      Array.from({ length: pagesToFetch }, (_, index) =>
-        fetch(
-          `${POKEMON_API}?limit=${PAGE_SIZE}&offset=${PAGE_SIZE * index}`
-        ).then((response) => response.json())
-      )
+      pagesToFetch.map(async (page) => (await fetch(page)).json())
     )
   ).flatMap((response) => response.results)
 
