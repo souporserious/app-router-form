@@ -9,17 +9,9 @@ export default async function Page({
   searchParams: { query?: string; offset?: number }
 }) {
   const offset = Number(searchParams.offset ?? 0)
-  const pagesToFetch = Array.from(
-    { length: Math.ceil((offset + PAGE_SIZE) / PAGE_SIZE) },
-    (_, index) => {
-      return `${POKEMON_API}?limit=${PAGE_SIZE}&offset=${PAGE_SIZE * index}`
-    }
-  )
-  const allPokemon = (
-    await Promise.all(
-      pagesToFetch.map(async (page) => (await fetch(page)).json())
-    )
-  ).flatMap((response) => response.results)
+  const res = await fetch(`${POKEMON_API}?limit=${PAGE_SIZE}&offset=${offset}`)
+  const { results: allPokemon } = await res.json()
+  const DynamicPreviousTag = offset === 0 ? "button" : Link
 
   return (
     <div
@@ -38,17 +30,32 @@ export default async function Page({
           </div>
         ))}
       </div>
-      <Link
-        href={`/?offset=${offset + PAGE_SIZE}`}
-        style={{
-          display: 'inline-block',
-          padding: '0.5rem',
-          border: '1px solid black',
-          textDecoration: 'none',
-        }}
-      >
-        Show More
-      </Link>
+      <div style={{ height: '1rem' }}>
+        <DynamicPreviousTag
+          href={`/?offset=${offset - PAGE_SIZE}`}
+          disabled={offset === 0}
+          style={{
+            display: 'inline-block',
+            cursor: offset === 0 ? 'not-allowed' : 'pointer',
+            padding: '0.5rem',
+            border: '1px solid black',
+            textDecoration: 'none',
+          }}
+        >
+          &lt; Previous
+        </DynamicPreviousTag>
+        <Link
+          href={`/?offset=${offset + PAGE_SIZE}`}
+          style={{
+            display: 'inline-block',
+            padding: '0.5rem',
+            border: '1px solid black',
+            textDecoration: 'none',
+          }}
+        >
+          Next &gt;
+        </Link>
+      </div>
     </div>
-  )
+  );
 }
