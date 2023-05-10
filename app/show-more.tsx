@@ -4,10 +4,10 @@ import { useLayoutEffect, useState } from 'react'
 import Link from 'next/link'
 
 export function ShowMore({ href }: { href: string }) {
+  const [offset, setOffset] = useState(1)
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const nextSearchParams = new URLSearchParams(Array.from(searchParams))
-  const [offset, setOffset] = useState(1)
 
   nextSearchParams.set('infinite', String(offset))
 
@@ -28,7 +28,7 @@ export function ShowMore({ href }: { href: string }) {
   }, [pathname, searchParams])
 
   return (
-    <Link href={`${href}?${nextSearchParams.toString()}`} replace>
+    <Link href={`${href}?${nextSearchParams}`} replace>
       Show More
     </Link>
   )
