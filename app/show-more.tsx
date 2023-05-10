@@ -1,9 +1,9 @@
 'use client'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { Suspense, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import Link from 'next/link'
 
-function ShowMoreLink({ href }: { href: string }) {
+export function ShowMore({ href }: { href: string }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const nextSearchParams = new URLSearchParams(Array.from(searchParams))
@@ -31,13 +31,5 @@ function ShowMoreLink({ href }: { href: string }) {
     <Link href={`${href}?${nextSearchParams.toString()}`} replace>
       Show More
     </Link>
-  )
-}
-
-export function ShowMore({ href }: { href: string }) {
-  return (
-    <Suspense fallback={null}>
-      <ShowMoreLink href={href} />
-    </Suspense>
   )
 }
